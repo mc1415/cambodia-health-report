@@ -78,6 +78,7 @@ select {
     box-sizing: border-box;
     font-size: 14px;
     color: #555;
+    font-family: Hanuman;
 }
 
 input:focus,
@@ -97,6 +98,7 @@ button {
     font-size: 18px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    font-family: Hanuman;
 }
 
 button:hover {
@@ -168,6 +170,7 @@ input[readonly] {
     font-size: 18px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    font-family: Hanuman;
 }
 
 #fetch-data-btn:hover {
