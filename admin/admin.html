@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>របាយការណ៍ស្ថិតិឱសថស្ថាន និងអគារលក់ឱសថបុរាណ</title>
+    <link rel="stylesheet" href="admin-style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Hanuman:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <div class="header">
+            <div class="header-logo">
+                <img src="MOH LOGO Official 2024.png" alt="MOH Logo">
+            </div>
+            <h1>របាយការណ៍ស្ថិតិឱសថស្ថាន និងអគារលក់ឱសថបុរាណ</h1>
+        </div>
+
+        <div class="form-group">
+            <label for="province-selector">មន្ទីរសុខាភិបាលនៃរដ្ឋបាលខេត្ត:</label>
+            <select id="province-selector" name="province-selector">
+                <option value="" disabled selected>ជ្រើសរើសខេត្ត</option>
+                <option value="Banteay Meanchey">បន្ទាយមានជ័យ</option>
+                <option value="Battambang">បាត់ដំបង</option>
+                <option value="Kampong Cham">កំពង់ចាម</option>
+                <option value="Kampong Chhnang">កំពង់ឆ្នាំង</option>
+                <option value="Kampong Speu">កំពង់ស្ពឺ</option>
+                <option value="Kampong Thom">កំពង់ធំ</option>
+                <option value="Kampot">កំពត</option>
+                <option value="Kandal">កណ្ដាល</option>
+                <option value="Koh Kong">កោះកុង</option>
+                <option value="Kratié">ក្រចេះ</option>
+                <option value="Mondulkiri">មណ្ឌលគីរី</option>
+                <option value="Phnom Penh">ភ្នំពេញ</option>
+                <option value="Preah Vihear">ព្រះវិហារ</option>
+                <option value="Prey Veng">ព្រៃវែង</option>
+                <option value="Pursat">ពោធិ៍សាត់</option>
+                <option value="Ratanakiri">រតនគិរី</option>
+                <option value="Siem Reap">សៀមរាប</option>
+                <option value="Preah Sihanouk">ព្រះសីហនុ</option>
+                <option value="Stung Treng">ស្ទឹងត្រែង</option>
+                <option value="Svay Rieng">ស្វាយរៀង</option>
+                <option value="Takéo">តាកែវ</option>
+                <option value="Oddar Meanchey">ឧត្ដរមានជ័យ</option>
+                <option value="Kep">កែប</option>
+                <option value="Pailin">ប៉ៃលិន</option>
+                <option value="Tbong Khmum">ត្បូងឃ្មុំ</option>
+            </select>
+        </div>
+
+        <button id="export-btn" class="action-btn">ទាញយករបាយការណ៍ (Excel)</button>
+        <button id="print-btn" class="action-btn">Print</button>
+
+        <h2>របាយការណ៍ឱសថស្ថាន</h2>
+        <table id="reports-table-1">
+            <thead>
+                <tr>
+                    <th>ល.រ</th>
+                    <th>បរិយាយ</th>
+                    <th>មករា</th>
+                    <th>កុម្ភៈ</th>
+                    <th>មីនា</th>
+                    <th>មេសា</th>
+                    <th>ឧសភា</th>
+                    <th>មិថុនា</th>
+                    <th>កក្កដា</th>
+                    <th>សីហា</th>
+                    <th>កញ្ញា</th>
+                    <th>តុលា</th>
+                    <th>វិច្ឆិកា</th>
+                    <th>ធ្នូ</th>
+                    <th>សរុប</th>
+                </tr>
+            </thead>
+            <tbody id="reports-body-1"></tbody>
+        </table>
+
+        <h2>របាយការណ៍តាមដាន ចំនួនឱសថស្ថានរង «ក»</h2>
+        <table id="reports-table-2">
+            <thead>
+                <tr>
+                    <th>ល.រ</th>
+                    <th>បរិយាយ</th>
+                    <th>មករា</th>
+                    <th>កុម្ភៈ</th>
+                    <th>មីនា</th>
+                    <th>មេសា</th>
+                    <th>ឧសភា</th>
+                    <th>មិថុនា</th>
+                    <th>កក្កដា</th>
+                    <th>សីហា</th>
+                    <th>កញ្ញា</th>
+                    <th>តុលា</th>
+                    <th>វិច្ឆិកា</th>
+                    <th>ធ្នូ</th>
+                    <th>សរុប</th>
+                </tr>
+            </thead>
+            <tbody id="reports-body-2"></tbody>
+        </table>
+
+        <h2>របាយការណ៍តាមដាន ចំនួនឱសថស្ថានរង «ខ»</h2>
+        <table id="reports-table-3">
+            <thead>
+                <tr>
+                    <th>ល.រ</th>
+                    <th>បរិយាយ</th>
+                    <th>មករា</th>
+                    <th>កុម្ភៈ</th>
+                    <th>មីនា</th>
+                    <th>មេសា</th>
+                    <th>ឧសភា</th>
+                    <th>មិថុនា</th>
+                    <th>កក្កដា</th>
+                    <th>សីហា</th>
+                    <th>កញ្ញា</th>
+                    <th>តុលា</th>
+                    <th>វិច្ឆិកា</th>
+                    <th>ធ្នូ</th>
+                    <th>សរុប</th>
+                </tr>
+            </thead>
+            <tbody id="reports-body-3"></tbody>
+        </table>
+
+        <h2>របាយការណ៍តាមដាន ចំនួនអគារលក់ឱសថបុរាណ</h2>
+        <table id="reports-table-4">
+            <thead>
+                <tr>
+                    <th>ល.រ</th>
+                    <th>បរិយាយ</th>
+                    <th>មករា</th>
+                    <th>កុម្ភៈ</th>
+                    <th>មីនា</th>
+                    <th>មេសា</th>
+                    <th>ឧសភា</th>
+                    <th>មិថុនា</th>
+                    <th>កក្កដា</th>
+                    <th>សីហា</th>
+                    <th>កញ្ញា</th>
+                    <th>តុលា</th>
+                    <th>វិច្ឆិកា</th>
+                    <th>ធ្នូ</th>
+                    <th>សរុប</th>
+                </tr>
+            </thead>
+            <tbody id="reports-body-4"></tbody>
+        </table>
+    </div>
+
+    <script src="admin-script.js"></script>
+</body>
+</html>

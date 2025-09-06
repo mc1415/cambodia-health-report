@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ផ្ទាំងគ្រប់គ្រង - ក្រាហ្វ</title>
+    <link rel="stylesheet" href="admin-style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Hanuman:wght@100..900&display=swap" rel="stylesheet">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <h1>របាយការណ៍ជាក្រាហ្វ</h1>
+        <p>ទិន្នន័យស្ថិតិប្រចាំខែ</p>
+
+        <div class="form-group">
+            <label for="province-selector">មន្ទីរសុខាភិបាលនៃរដ្ឋបាលខេត្ត:</label>
+            <select id="province-selector">
+                <option value="" disabled selected>ជ្រើសរើសខេត្ត</option>
+                <option value="Banteay Meanchey">បន្ទាយមានជ័យ</option>
+                <option value="Battambang">បាត់ដំបង</option>
+                <option value="Kampong Cham">កំពង់ចាម</option>
+                <option value="Kampong Chhnang">កំពង់ឆ្នាំង</option>
+                <option value="Kampong Speu">កំពង់ស្ពឺ</option>
+                <option value="Kampong Thom">កំពង់ធំ</option>
+                <option value="Kampot">កំពត</option>
+                <option value="Kandal">កណ្ដាល</option>
+                <option value="Koh Kong">កោះកុង</option>
+                <option value="Kratié">ក្រចេះ</option>
+                <option value="Mondulkiri">មណ្ឌលគីរី</option>
+                <option value="Phnom Penh">ភ្នំពេញ</option>
+                <option value="Preah Vihear">ព្រះវិហារ</option>
+                <option value="Prey Veng">ព្រៃវែង</option>
+                <option value="Pursat">ពោធិ៍សាត់</option>
+                <option value="Ratanakiri">រតនគិរី</option>
+                <option value="Siem Reap">សៀមរាប</option>
+                <option value="Preah Sihanouk">ព្រះសីហនុ</option>
+                <option value="Stung Treng">ស្ទឹងត្រែង</option>
+                <option value="Svay Rieng">ស្វាយរៀង</option>
+                <option value="Takéo">តាកែវ</option>
+                <option value="Oddar Meanchey">ឧត្ដរមានជ័យ</option>
+                <option value="Kep">កែប</option>
+                <option value="Pailin">ប៉ៃលិន</option>
+                <option value="Tbong Khmum">ត្បូងឃ្មុំ</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="year-selector">ប្រចាំឆ្នាំ:</label>
+            <select id="year-selector">
+                <option value="" disabled selected>ជ្រើសរើសឆ្នាំ</option>
+                <!-- Years will be filled by JavaScript -->
+            </select>
+        </div>
+
+        <div id="chart-container">
+            <svg id="bar-chart" width="100%" height="500"></svg>
+        </div>
+    </div>
+
+    <script src="admin-graph-script.js"></script>
+</body>
+</html>
