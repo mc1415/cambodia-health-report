@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>មន្ទីរសុខាភិបាលនៃរដ្ឋបាលខេត្ត</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Hanuman:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div id="loading-screen" class="loading-screen">
+        <div class="spinner"></div>
+        <p>កំពុងពិនិត្យមើលម៉ាស៊ីនមេ...</p>
+    </div>
+
+    <div class="form-container" id="form-container" style="display: none;">
+        <div class="header">
+            <div class="header-logo">
+                <img src="MOH LOGO Official 2024.png" alt="MOH Logo">
+            </div>
+            <h1>មន្ទីរសុខាភិបាលនៃរដ្ឋបាលខេត្ត</h1>
+        </div>
+        
+        <form id="health-report-form">
+            <div class="form-group">
+                <label for="province">ជ្រើសរើសរដ្ឋបាលខេត្ត:</label>
+                <select id="province" name="province" required>
+                    <option value="" disabled selected>ជ្រើសរើសខេត្ត</option>
+                    <option value="Banteay Meanchey">បន្ទាយមានជ័យ</option>
+                    <option value="Battambang">បាត់ដំបង</option>
+                    <option value="Kampong Cham">កំពង់ចាម</option>
+                    <option value="Kampong Chhnang">កំពង់ឆ្នាំង</option>
+                    <option value="Kampong Speu">កំពង់ស្ពឺ</option>
+                    <option value="Kampong Thom">កំពង់ធំ</option>
+                    <option value="Kampot">កំពត</option>
+                    <option value="Kandal">កណ្ដាល</option>
+                    <option value="Koh Kong">កោះកុង</option>
+                    <option value="Kratié">ក្រចេះ</option>
+                    <option value="Mondulkiri">មណ្ឌលគីរី</option>
+                    <option value="Phnom Penh">ភ្នំពេញ</option>
+                    <option value="Preah Vihear">ព្រះវិហារ</option>
+                    <option value="Prey Veng">ព្រៃវែង</option>
+                    <option value="Pursat">ពោធិ៍សាត់</option>
+                    <option value="Ratanakiri">រតនគិរី</option>
+                    <option value="Siem Reap">សៀមរាប</option>
+                    <option value="Preah Sihanouk">ព្រះសីហនុ</option>
+                    <option value="Stung Treng">ស្ទឹងត្រែង</option>
+                    <option value="Svay Rieng">ស្វាយរៀង</option>
+                    <option value="Takéo">តាកែវ</option>
+                    <option value="Oddar Meanchey">ឧត្ដរមានជ័យ</option>
+                    <option value="Kep">កែប</option>
+                    <option value="Pailin">ប៉ៃលិន</option>
+                    <option value="Tbong Khmum">ត្បូងឃ្មុំ</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="report-month">ប្រចាំខែ:</label>
+                <select id="report-month" name="report_month" required>
+                    <option value="" disabled selected>ជ្រើសរើសខែ</option>
+                    <option value="01">មករា</option>
+                    <option value="02">កុម្ភៈ</option>
+                    <option value="03">មីនា</option>
+                    <option value="04">មេសា</option>
+                    <option value="05">ឧសភា</option>
+                    <option value="06">មិថុនា</option>
+                    <option value="07">កក្កដា</option>
+                    <option value="08">សីហា</option>
+                    <option value="09">កញ្ញា</option>
+                    <option value="10">តុលា</option>
+                    <option value="11">វិច្ឆិកា</option>
+                    <option value="12">ធ្នូ</option>
+                </select>
+            </div>
+            
+            <hr>
+
+            <fieldset>
+                <legend>របាយការណ៍តាមដានចំនួនឱសថស្ថាន</legend>
+                <div class="form-group">
+                    <label for="pharmacy_open">តើមានឱសថស្ថានចំនួនប៉ុន្មាន ដែលបានបើក?</label>
+                    <input type="number" id="pharmacy_open" name="pharmacy_open" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="pharmacy_renew">តើមានឱសថស្ថានចំនួនប៉ុន្មាន ដែលបានបន្តសុពលភាព?</label>
+                    <input type="number" id="pharmacy_renew" name="pharmacy_renew" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="pharmacy_closed">តើមានឱសថស្ថានចំនួនប៉ុន្មាន ដែលបានបិទ?</label>
+                    <input type="number" id="pharmacy_closed" name="pharmacy_closed" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="pharmacy_total">តើមានឱសថស្ថានសរុបចំនួនប៉ុន្មាន?</label>
+                    <input type="number" id="pharmacy_total" name="pharmacy_total" min="0" required>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>របាយការណ៍តាមដានចំនួនឱសថស្ថានរង «ក»</legend>
+                <div class="form-group">
+                    <label for="sub_pharmacy_a_open">តើមានឱសថស្ថានរង «ក» ចំនួនប៉ុន្មាន ដែលបានបើក?</label>
+                    <input type="number" id="sub_pharmacy_a_open" name="sub_pharmacy_a_open" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="sub_pharmacy_a_renew">តើមានឱសថស្ថានរង «ក» ចំនួនប៉ុន្មាន ដែលបានបន្តសុពលភាព?</label>
+                    <input type="number" id="sub_pharmacy_a_renew" name="sub_pharmacy_a_renew" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="sub_pharmacy_a_closed">តើមានឱសថស្ថានរង «ក» ចំនួនប៉ុន្មាន ដែលបានបិទ?</label>
+                    <input type="number" id="sub_pharmacy_a_closed" name="sub_pharmacy_a_closed" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="sub_pharmacy_a_total">តើមានឱសថស្ថានរង «ក» សរុបចំនួនប៉ុន្មាន?</label>
+                    <input type="number" id="sub_pharmacy_a_total" name="sub_pharmacy_a_total" min="0" required>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>របាយការណ៍តាមដានចំនួនឱសថស្ថានរង «ខ»</legend>
+                <div class="form-group">
+                    <label for="sub_pharmacy_b_open">តើមានឱសថស្ថានរង «ខ» ចំនួនប៉ុន្មាន ដែលបានបើក?</label>
+                    <input type="number" id="sub_pharmacy_b_open" name="sub_pharmacy_b_open" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="sub_pharmacy_b_renew">តើមានឱសថស្ថានរង «ខ» ចំនួនប៉ុន្មាន ដែលបានបន្តសុពលភាព?</label>
+                    <input type="number" id="sub_pharmacy_b_renew" name="sub_pharmacy_b_renew" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="sub_pharmacy_b_closed">តើមានឱសថស្ថានរង «ខ» ចំនួនប៉ុន្មាន ដែលបានបិទ?</label>
+                    <input type="number" id="sub_pharmacy_b_closed" name="sub_pharmacy_b_closed" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="sub_pharmacy_b_total">តើមានឱសថស្ថានរង «ខ» សរុបចំនួនប៉ុន្មាន?</label>
+                    <input type="number" id="sub_pharmacy_b_total" name="sub_pharmacy_b_total" min="0" required>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>របាយការណ៍តាមដានចំនួនអគារលក់ឱសថបុរាណ</legend>
+                <div class="form-group">
+                    <label for="herbal_open">តើមានអគារលក់ឱសថបុរាណចំនួនប៉ុន្មាន ដែលបានបើក?</label>
+                    <input type="number" id="herbal_open" name="herbal_open" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="herbal_renew">តើមានអគារលក់ឱសថបុរាណចំនួនប៉ុន្មាន ដែលបានបន្តសុពលភាព?</label>
+                    <input type="number" id="herbal_renew" name="herbal_renew" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="herbal_closed">តើមានអគារលក់ឱសថបុរាណចំនួនប៉ុន្មាន ដែលបានបិទ?</label>
+                    <input type="number" id="herbal_closed" name="herbal_closed" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="herbal_total">តើមានអគារលក់ឱសថបុរាណសរុបចំនួនប៉ុន្មាន?</label>
+                    <input type="number" id="herbal_total" name="herbal_total" min="0" required>
+                </div>
+            </fieldset>
+
+            <button type="submit">បញ្ជូន</button>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
