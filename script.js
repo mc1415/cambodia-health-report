@@ -14,6 +14,66 @@ document.addEventListener('DOMContentLoaded', () => {
     const formContainer = document.getElementById('form-container');
     const form = document.getElementById('health-report-form');
 
+    function calculateTotal(remaining, opened, closed) {
+        const remainingVal = parseInt(remaining.value, 10) || 0;
+        const openedVal = parseInt(opened.value, 10) || 0;
+        const closedVal = parseInt(closed.value, 10) || 0;
+        return (remainingVal + openedVal) - closedVal;
+    }
+
+    // Attach event listeners for real-time calculation
+    const pharmacyInputs = document.querySelectorAll('#pharmacy_remaining_start, #pharmacy_open, #pharmacy_closed');
+    const pharmacyOutput = document.getElementById('pharmacy_total_end_of_month');
+    pharmacyInputs.forEach(input => {
+        input.addEventListener('input', () => {
+            const result = calculateTotal(
+                document.getElementById('pharmacy_remaining_start'),
+                document.getElementById('pharmacy_open'),
+                document.getElementById('pharmacy_closed')
+            );
+            pharmacyOutput.value = result;
+        });
+    });
+
+    const subPharmacyAInputs = document.querySelectorAll('#sub_pharmacy_a_remaining_start, #sub_pharmacy_a_open, #sub_pharmacy_a_closed');
+    const subPharmacyAOutput = document.getElementById('sub_pharmacy_a_total_end_of_month');
+    subPharmacyAInputs.forEach(input => {
+        input.addEventListener('input', () => {
+            const result = calculateTotal(
+                document.getElementById('sub_pharmacy_a_remaining_start'),
+                document.getElementById('sub_pharmacy_a_open'),
+                document.getElementById('sub_pharmacy_a_closed')
+            );
+            subPharmacyAOutput.value = result;
+        });
+    });
+    
+    const subPharmacyBInputs = document.querySelectorAll('#sub_pharmacy_b_remaining_start, #sub_pharmacy_b_open, #sub_pharmacy_b_closed');
+    const subPharmacyBOutput = document.getElementById('sub_pharmacy_b_total_end_of_month');
+    subPharmacyBInputs.forEach(input => {
+        input.addEventListener('input', () => {
+            const result = calculateTotal(
+                document.getElementById('sub_pharmacy_b_remaining_start'),
+                document.getElementById('sub_pharmacy_b_open'),
+                document.getElementById('sub_pharmacy_b_closed')
+            );
+            subPharmacyBOutput.value = result;
+        });
+    });
+
+    const herbalInputs = document.querySelectorAll('#herbal_remaining_start, #herbal_open, #herbal_closed');
+    const herbalOutput = document.getElementById('herbal_total_end_of_month');
+    herbalInputs.forEach(input => {
+        input.addEventListener('input', () => {
+            const result = calculateTotal(
+                document.getElementById('herbal_remaining_start'),
+                document.getElementById('herbal_open'),
+                document.getElementById('herbal_closed')
+            );
+            herbalOutput.value = result;
+        });
+    });
+
     async function checkServerStatus() {
         try {
             const response = await fetch(PING_URL, {

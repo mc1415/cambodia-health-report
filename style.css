@@ -142,3 +142,15 @@ button:hover {
         padding: 20px;
     }
 }
+
+input[readonly] {
+    background-color: #f2f2f2;
+    color: #555;
+    cursor: not-allowed;
+}
+
+/* Optional: You can also style the total fields more specifically */
+.total-field input {
+    font-weight: bold;
+    color: #004a91;
+}
