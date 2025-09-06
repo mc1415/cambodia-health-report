@@ -1,18 +1,29 @@
 // Replace with your Supabase credentials
-const FUNCTION_URL = 'https://xoohqmmszipymrivmtae.supabase.co/functions/v1/hyper-action';
-const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+const FUNCTION_URL = 'https://xoohqmmszipymrivmtae.supabase.co/functions/v1/dynamic-api';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inhvb2hxbW1zemlweW1yaXZtdGFlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcxMzU2NjAsImV4cCI6MjA3MjcxMTY2MH0.P5Lz3k5SbHWXhYWXFjCSXkyfxjZrB7nsMPmkQhF9LvI';
 
 document.addEventListener('DOMContentLoaded', () => {
     const loadingScreen = document.getElementById('loading-screen');
     const formContainer = document.getElementById('form-container');
     const form = document.getElementById('health-report-form');
+    const fetchDataBtn = document.getElementById('fetch-data-btn');
 
     const monthNames = {
         '01': 'មករា', '02': 'កុម្ភៈ', '03': 'មីនា', '04': 'មេសា',
         '05': 'ឧសភា', '06': 'មិថុនា', '07': 'កក្កដា', '08': 'សីហា',
         '09': 'កញ្ញា', '10': 'តុលា', '11': 'វិច្ឆិកា', '12': 'ធ្នូ'
     };
+    
+    // Function to show custom popups
+    function showPopup(popupId) {
+        const popup = document.getElementById(popupId);
+        popup.style.display = 'flex';
+        popup.querySelector('.popup-close-btn').addEventListener('click', () => {
+            popup.style.display = 'none';
+        });
+    }
 
+    // Function to calculate the total for a given section
     function calculateTotal(remaining, opened, closed) {
         const remainingVal = parseInt(remaining.value, 10) || 0;
         const openedVal = parseInt(opened.value, 10) || 0;
@@ -47,16 +58,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
     
-    const subPharmacyBInputs = document.querySelectorAll('#sub_pharmacy_b_remaining_start, #sub_pharmacy_b_open, #sub_pharmacy_b_closed');
+    const subPharmacyBInputs = document.querySelectorAll('#sub_pharmacy_b_remaining_start, #sub_pharmacy_b_closed');
     const subPharmacyBOutput = document.getElementById('sub_pharmacy_b_total_end_of_month');
     subPharmacyBInputs.forEach(input => {
         input.addEventListener('input', () => {
-            const result = calculateTotal(
-                document.getElementById('sub_pharmacy_b_remaining_start'),
-                document.getElementById('sub_pharmacy_b_open'),
-                document.getElementById('sub_pharmacy_b_closed')
-            );
-            subPharmacyBOutput.value = result;
+            const remainingVal = parseInt(document.getElementById('sub_pharmacy_b_remaining_start').value, 10) || 0;
+            const closedVal = parseInt(document.getElementById('sub_pharmacy_b_closed').value, 10) || 0;
+            subPharmacyBOutput.value = remainingVal - closedVal;
         });
     });
 
@@ -71,6 +79,70 @@ document.addEventListener('DOMContentLoaded', () => {
             );
             herbalOutput.value = result;
         });
+    });
+
+    // Function to toggle readonly state and style
+    function setRemainingStartReadonly(isReadonly) {
+        const remainingStartFields = document.querySelectorAll(
+            '#pharmacy_remaining_start, #sub_pharmacy_a_remaining_start, #sub_pharmacy_b_remaining_start, #herbal_remaining_start'
+        );
+        remainingStartFields.forEach(field => {
+            if (isReadonly) {
+                field.setAttribute('readonly', true);
+                field.classList.add('readonly-field');
+            } else {
+                field.removeAttribute('readonly');
+                field.classList.remove('readonly-field');
+            }
+        });
+    }
+
+    // New logic for the "Fetch" button
+    fetchDataBtn.addEventListener('click', async () => {
+        const province = document.getElementById('province').value;
+        const month = document.getElementById('report-month').value;
+        const year = document.getElementById('report-year').value;
+
+        if (!province || !month || !year) {
+            alert('សូមជ្រើសរើសខេត្ត ខែ និងឆ្នាំជាមុនសិន។');
+            return;
+        }
+
+        const url = `${FUNCTION_URL}?province=${province}&month=${month}&year=${year}`;
+        try {
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                    'apikey': SUPABASE_ANON_KEY
+                }
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                if (data && data.length > 0) {
+                    const prevMonthData = data[0];
+                    document.getElementById('pharmacy_remaining_start').value = prevMonthData.pharmacy_total_end_of_month;
+                    document.getElementById('sub_pharmacy_a_remaining_start').value = prevMonthData.sub_pharmacy_a_total_end_of_month;
+                    document.getElementById('sub_pharmacy_b_remaining_start').value = prevMonthData.sub_pharmacy_b_total_end_of_month;
+                    document.getElementById('herbal_remaining_start').value = prevMonthData.herbal_total_end_of_month;
+                    setRemainingStartReadonly(true);
+                    showPopup('success-popup');
+                } else {
+                    document.getElementById('pharmacy_remaining_start').value = 0;
+                    document.getElementById('sub_pharmacy_a_remaining_start').value = 0;
+                    document.getElementById('sub_pharmacy_b_remaining_start').value = 0;
+                    document.getElementById('herbal_remaining_start').value = 0;
+                    setRemainingStartReadonly(false);
+                    showPopup('nodata-popup');
+                }
+            } else {
+                showPopup('nodata-popup');
+            }
+        } catch (error) {
+            console.error('Error fetching previous month data:', error);
+            showPopup('nodata-popup');
+        }
     });
 
     async function checkServerStatus() {
@@ -96,52 +168,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     checkServerStatus();
-
-    const provinceSelect = document.getElementById('province');
-    const monthSelect = document.getElementById('report-month');
-    const yearInput = document.getElementById('report-year');
-
-    [provinceSelect, monthSelect, yearInput].forEach(input => {
-        input.addEventListener('change', async () => {
-            const province = provinceSelect.value;
-            const month = monthSelect.value;
-            const year = yearInput.value;
-
-            if (province && month && year) {
-                const url = `${FUNCTION_URL}?province=${province}&month=${month}&year=${year}`;
-                try {
-                    const response = await fetch(url, {
-                        method: 'GET',
-                        headers: {
-                            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-                            'apikey': SUPABASE_ANON_KEY
-                        }
-                    });
-
-                    if (response.ok) {
-                        const data = await response.json();
-                        if (data && data.length > 0) {
-                            const prevMonthData = data[0];
-                            document.getElementById('pharmacy_remaining_start').value = prevMonthData.pharmacy_total_end_of_month;
-                            document.getElementById('sub_pharmacy_a_remaining_start').value = prevMonthData.sub_pharmacy_a_total_end_of_month;
-                            document.getElementById('sub_pharmacy_b_remaining_start').value = prevMonthData.sub_pharmacy_b_total_end_of_month;
-                            document.getElementById('herbal_remaining_start').value = prevMonthData.herbal_total_end_of_month;
-                        } else {
-                            // If no data is found, set the 'remaining start' fields to 0
-                            document.getElementById('pharmacy_remaining_start').value = 0;
-                            document.getElementById('sub_pharmacy_a_remaining_start').value = 0;
-                            document.getElementById('sub_pharmacy_b_remaining_start').value = 0;
-                            document.getElementById('herbal_remaining_start').value = 0;
-                            console.log('No data found for the previous month. Setting start values to 0.');
-                        }
-                    }
-                } catch (error) {
-                    console.error('Error fetching previous month data:', error);
-                }
-            }
-        });
-    });
-
 
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -203,8 +229,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert('An error occurred. Please try again.');
             } else {
                 console.log('Form submitted successfully:', result);
-                alert('Form submitted successfully!');
-                form.reset();
+                showPopup('success-popup');
+                // The form is now reset after a 3-second delay to allow the popup to show
+                setTimeout(() => {
+                    form.reset();
+                    setRemainingStartReadonly(false);
+                }, 3000);
             }
         } catch (error) {
             console.error('Error submitting form:', error);

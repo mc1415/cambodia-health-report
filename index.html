@@ -14,6 +14,19 @@
         <p>កំពុងពិនិត្យមើលម៉ាស៊ីនមេ...</p>
     </div>
 
+    <div id="success-popup" class="popup-container">
+        <div class="popup-content success">
+            <p>ទិន្នន័យខែមុនត្រូវបានទាញយកដោយជោគជ័យ! ✅</p>
+            <button class="popup-close-btn">បិទ</button>
+        </div>
+    </div>
+    <div id="nodata-popup" class="popup-container">
+        <div class="popup-content no-data">
+            <p>មិនអាចរកទិន្នន័យខែមុនបានទេ។ សូមបញ្ចូលដោយដៃ។ ⚠️</p>
+            <button class="popup-close-btn">បិទ</button>
+        </div>
+    </div>
+
     <div class="form-container" id="form-container" style="display: none;">
         <div class="header">
             <div class="header-logo">
@@ -77,8 +90,9 @@
             <div class="form-group">
                 <label for="report-year">ប្រចាំឆ្នាំ:</label>
                 <input type="number" id="report-year" name="report_year" min="2020" max="2100" required>
-            </div>  
+            </div>
             
+            <button type="button" id="fetch-data-btn">ទាញរបាយការណ៍ខែមុន</button>
             <hr>
 
             <fieldset>
@@ -208,7 +222,7 @@
                     <input type="number" id="herbal_renew_validity" name="herbal_renew_validity" min="0" required>
                 </div>
                 <div class="form-group">
-                    <label for="herbal_renew_changes">ចំនួនអគារលក់ឱសថបុរាណដែលបានប្តូរឱសថការី ប្តូរម្ចាស់ទុន ប្តូរទីតាំង:</label>
+                    <label for="herbal_renew_changes">ចំនួនអគារលក់ឱសថបុរាណដែលបានប្តូរឱសថការី ប្តូរម្ចាស់ទុន ប្តូរទីតាំងក្នុងគ្រា:</label>
                     <input type="number" id="herbal_renew_changes" name="herbal_renew_changes" min="0" required>
                 </div>
                 <div class="form-group">
