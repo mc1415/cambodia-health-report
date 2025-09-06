@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>មន្ទីរសុខាភិបាលនៃរដ្ឋបាលខេត្ត</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Hanuman:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Preahvihear&display=swap" rel="stylesheet">
 </head>
 <body>
 
     <div id="loading-screen" class="loading-screen">
         <div class="spinner"></div>
-        <p>កំពុងដំណើរការ...</p>
+        <p>កំពុងពិនិត្យមើលម៉ាស៊ីនមេ...</p>
     </div>
 
     <div class="form-container" id="form-container" style="display: none;">
@@ -73,11 +73,20 @@
                     <option value="12">ធ្នូ</option>
                 </select>
             </div>
+
+            <div class="form-group">
+                <label for="report-year">ប្រចាំឆ្នាំ:</label>
+                <input type="number" id="report-year" name="report_year" min="2020" max="2100" required>
+            </div>
             
             <hr>
 
             <fieldset>
                 <legend>របាយការណ៍តាមដានចំនួនឱសថស្ថាន</legend>
+                <div class="form-group">
+                    <label for="pharmacy_remaining_start">ចំនួននៅសល់ដើមខែ:</label>
+                    <input type="number" id="pharmacy_remaining_start" name="pharmacy_remaining_start" min="0" required>
+                </div>
                 <div class="form-group">
                     <label for="pharmacy_open">តើមានឱសថស្ថានចំនួនប៉ុន្មាន ដែលបានបើក?</label>
                     <input type="number" id="pharmacy_open" name="pharmacy_open" min="0" required>
@@ -91,6 +100,10 @@
                     <input type="number" id="pharmacy_closed" name="pharmacy_closed" min="0" required>
                 </div>
                 <div class="form-group">
+                    <label for="pharmacy_closed_by_measure">តើមានឱសថស្ថានចំនួនប៉ុន្មាន ដែលបានបិទដោយវិធានការ?</label>
+                    <input type="number" id="pharmacy_closed_by_measure" name="pharmacy_closed_by_measure" min="0" required>
+                </div>
+                <div class="form-group">
                     <label for="pharmacy_total">តើមានឱសថស្ថានសរុបចំនួនប៉ុន្មាន?</label>
                     <input type="number" id="pharmacy_total" name="pharmacy_total" min="0" required>
                 </div>
@@ -98,6 +111,10 @@
 
             <fieldset>
                 <legend>របាយការណ៍តាមដានចំនួនឱសថស្ថានរង «ក»</legend>
+                <div class="form-group">
+                    <label for="sub_pharmacy_a_remaining_start">ចំនួននៅសល់ដើមខែ:</label>
+                    <input type="number" id="sub_pharmacy_a_remaining_start" name="sub_pharmacy_a_remaining_start" min="0" required>
+                </div>
                 <div class="form-group">
                     <label for="sub_pharmacy_a_open">តើមានឱសថស្ថានរង «ក» ចំនួនប៉ុន្មាន ដែលបានបើក?</label>
                     <input type="number" id="sub_pharmacy_a_open" name="sub_pharmacy_a_open" min="0" required>
@@ -111,6 +128,10 @@
                     <input type="number" id="sub_pharmacy_a_closed" name="sub_pharmacy_a_closed" min="0" required>
                 </div>
                 <div class="form-group">
+                    <label for="sub_pharmacy_a_closed_by_measure">តើមានឱសថស្ថានរង «ក» ចំនួនប៉ុន្មាន ដែលបានបិទដោយវិធានការ?</label>
+                    <input type="number" id="sub_pharmacy_a_closed_by_measure" name="sub_pharmacy_a_closed_by_measure" min="0" required>
+                </div>
+                <div class="form-group">
                     <label for="sub_pharmacy_a_total">តើមានឱសថស្ថានរង «ក» សរុបចំនួនប៉ុន្មាន?</label>
                     <input type="number" id="sub_pharmacy_a_total" name="sub_pharmacy_a_total" min="0" required>
                 </div>
@@ -118,6 +139,10 @@
 
             <fieldset>
                 <legend>របាយការណ៍តាមដានចំនួនឱសថស្ថានរង «ខ»</legend>
+                <div class="form-group">
+                    <label for="sub_pharmacy_b_remaining_start">ចំនួននៅសល់ដើមខែ:</label>
+                    <input type="number" id="sub_pharmacy_b_remaining_start" name="sub_pharmacy_b_remaining_start" min="0" required>
+                </div>
                 <div class="form-group">
                     <label for="sub_pharmacy_b_open">តើមានឱសថស្ថានរង «ខ» ចំនួនប៉ុន្មាន ដែលបានបើក?</label>
                     <input type="number" id="sub_pharmacy_b_open" name="sub_pharmacy_b_open" min="0" required>
@@ -131,6 +156,10 @@
                     <input type="number" id="sub_pharmacy_b_closed" name="sub_pharmacy_b_closed" min="0" required>
                 </div>
                 <div class="form-group">
+                    <label for="sub_pharmacy_b_closed_by_measure">តើមានឱសថស្ថានរង «ខ» ចំនួនប៉ុន្មាន ដែលបានបិទដោយវិធានការ?</label>
+                    <input type="number" id="sub_pharmacy_b_closed_by_measure" name="sub_pharmacy_b_closed_by_measure" min="0" required>
+                </div>
+                <div class="form-group">
                     <label for="sub_pharmacy_b_total">តើមានឱសថស្ថានរង «ខ» សរុបចំនួនប៉ុន្មាន?</label>
                     <input type="number" id="sub_pharmacy_b_total" name="sub_pharmacy_b_total" min="0" required>
                 </div>
@@ -138,6 +167,10 @@
 
             <fieldset>
                 <legend>របាយការណ៍តាមដានចំនួនអគារលក់ឱសថបុរាណ</legend>
+                <div class="form-group">
+                    <label for="herbal_remaining_start">ចំនួននៅសល់ដើមខែ:</label>
+                    <input type="number" id="herbal_remaining_start" name="herbal_remaining_start" min="0" required>
+                </div>
                 <div class="form-group">
                     <label for="herbal_open">តើមានអគារលក់ឱសថបុរាណចំនួនប៉ុន្មាន ដែលបានបើក?</label>
                     <input type="number" id="herbal_open" name="herbal_open" min="0" required>
@@ -151,6 +184,10 @@
                     <input type="number" id="herbal_closed" name="herbal_closed" min="0" required>
                 </div>
                 <div class="form-group">
+                    <label for="herbal_closed_by_measure">តើមានអគារលក់ឱសថបុរាណចំនួនប៉ុន្មាន ដែលបានបិទដោយវិធានការ?</label>
+                    <input type="number" id="herbal_closed_by_measure" name="herbal_closed_by_measure" min="0" required>
+                </div>
+                <div class="form-group">
                     <label for="herbal_total">តើមានអគារលក់ឱសថបុរាណសរុបចំនួនប៉ុន្មាន?</label>
                     <input type="number" id="herbal_total" name="herbal_total" min="0" required>
                 </div>
@@ -162,5 +199,4 @@
 
     <script src="script.js"></script>
 </body>
-
 </html>
