@@ -1,18 +1,17 @@
 // Replace with your Supabase credentials
-const SUPABASE_URL = 'https://xoohqmmszipymrivmtae.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inhvb2hxbW1zemlweW1yaXZtdGFlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcxMzU2NjAsImV4cCI6MjA3MjcxMTY2MH0.P5Lz3k5SbHWXhYWXFjCSXkyfxjZrB7nsMPmkQhF9LvI';
-
-// A simple endpoint to check if the Supabase service is ready
-// This URL will be different depending on your table name. Let's use 'health_reports_final'
-const PING_URL = `${SUPABASE_URL}/rest/v1/health_reports_data?select=id&limit=1`;
-
-// Initialize Supabase client
-const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const FUNCTION_URL = 'https://xoohqmmszipymrivmtae.supabase.co/functions/v1/hyper-action';
+const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
 
 document.addEventListener('DOMContentLoaded', () => {
     const loadingScreen = document.getElementById('loading-screen');
     const formContainer = document.getElementById('form-container');
     const form = document.getElementById('health-report-form');
+
+    const monthNames = {
+        '01': 'មករា', '02': 'កុម្ភៈ', '03': 'មីនា', '04': 'មេសា',
+        '05': 'ឧសភា', '06': 'មិថុនា', '07': 'កក្កដា', '08': 'សីហា',
+        '09': 'កញ្ញា', '10': 'តុលា', '11': 'វិច្ឆិកា', '12': 'ធ្នូ'
+    };
 
     function calculateTotal(remaining, opened, closed) {
         const remainingVal = parseInt(remaining.value, 10) || 0;
@@ -76,15 +75,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function checkServerStatus() {
         try {
-            const response = await fetch(PING_URL, {
-                method: 'GET',
+            const response = await fetch(FUNCTION_URL, {
+                method: 'OPTIONS',
                 headers: {
-                    'apikey': SUPABASE_ANON_KEY,
-                    'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+                    'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                    'apikey': SUPABASE_ANON_KEY
                 }
             });
 
-            // Simply check if the response status is okay (e.g., 200-299)
             if (response.ok) {
                 console.log('Server is live.');
                 loadingScreen.style.display = 'none';
@@ -99,17 +97,57 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     checkServerStatus();
 
+    const provinceSelect = document.getElementById('province');
+    const monthSelect = document.getElementById('report-month');
+    const yearInput = document.getElementById('report-year');
+
+    [provinceSelect, monthSelect, yearInput].forEach(input => {
+        input.addEventListener('change', async () => {
+            const province = provinceSelect.value;
+            const month = monthSelect.value;
+            const year = yearInput.value;
+
+            if (province && month && year) {
+                const url = `${FUNCTION_URL}?province=${province}&month=${month}&year=${year}`;
+                try {
+                    const response = await fetch(url, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                            'apikey': SUPABASE_ANON_KEY
+                        }
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (data && data.length > 0) {
+                            const prevMonthData = data[0];
+                            document.getElementById('pharmacy_remaining_start').value = prevMonthData.pharmacy_total_end_of_month;
+                            document.getElementById('sub_pharmacy_a_remaining_start').value = prevMonthData.sub_pharmacy_a_total_end_of_month;
+                            document.getElementById('sub_pharmacy_b_remaining_start').value = prevMonthData.sub_pharmacy_b_total_end_of_month;
+                            document.getElementById('herbal_remaining_start').value = prevMonthData.herbal_total_end_of_month;
+                        } else {
+                            // If no data is found, set the 'remaining start' fields to 0
+                            document.getElementById('pharmacy_remaining_start').value = 0;
+                            document.getElementById('sub_pharmacy_a_remaining_start').value = 0;
+                            document.getElementById('sub_pharmacy_b_remaining_start').value = 0;
+                            document.getElementById('herbal_remaining_start').value = 0;
+                            console.log('No data found for the previous month. Setting start values to 0.');
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error fetching previous month data:', error);
+                }
+            }
+        });
+    });
+
+
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
         const formData = new FormData(form);
         const data = Object.fromEntries(formData.entries());
-        
-        const monthNames = {
-            '01': 'មករា', '02': 'កុម្ភៈ', '03': 'មីនា', '04': 'មេសា',
-            '05': 'ឧសភា', '06': 'មិថុនា', '07': 'កក្កដា', '08': 'សីហា',
-            '09': 'កញ្ញា', '10': 'តុលា', '11': 'វិច្ឆិកា', '12': 'ធ្នូ'
-        };
 
         const payload = {
             province: data.province,
@@ -122,6 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
             pharmacy_closed: parseInt(data.pharmacy_closed, 10),
             pharmacy_closed_by_measure: parseInt(data.pharmacy_closed_by_measure, 10),
             pharmacy_penaltied: parseInt(data.pharmacy_penaltied, 10),
+            pharmacy_total_end_of_month: parseInt(data.pharmacy_total_end_of_month, 10),
             sub_pharmacy_a_remaining_start: parseInt(data.sub_pharmacy_a_remaining_start, 10),
             sub_pharmacy_a_open: parseInt(data.sub_pharmacy_a_open, 10),
             sub_pharmacy_a_renew_validity: parseInt(data.sub_pharmacy_a_renew_validity, 10),
@@ -129,11 +168,13 @@ document.addEventListener('DOMContentLoaded', () => {
             sub_pharmacy_a_closed: parseInt(data.sub_pharmacy_a_closed, 10),
             sub_pharmacy_a_closed_by_measure: parseInt(data.sub_pharmacy_a_closed_by_measure, 10),
             sub_pharmacy_a_penaltied: parseInt(data.sub_pharmacy_a_penaltied, 10),
+            sub_pharmacy_a_total_end_of_month: parseInt(data.sub_pharmacy_a_total_end_of_month, 10),
             sub_pharmacy_b_remaining_start: parseInt(data.sub_pharmacy_b_remaining_start, 10),
             sub_pharmacy_b_renew: parseInt(data.sub_pharmacy_b_renew, 10),
             sub_pharmacy_b_closed: parseInt(data.sub_pharmacy_b_closed, 10),
             sub_pharmacy_b_closed_by_measure: parseInt(data.sub_pharmacy_b_closed_by_measure, 10),
             sub_pharmacy_b_penaltied: parseInt(data.sub_pharmacy_b_penaltied, 10),
+            sub_pharmacy_b_total_end_of_month: parseInt(data.sub_pharmacy_b_total_end_of_month, 10),
             herbal_remaining_start: parseInt(data.herbal_remaining_start, 10),
             herbal_open: parseInt(data.herbal_open, 10),
             herbal_renew_validity: parseInt(data.herbal_renew_validity, 10),
@@ -141,46 +182,33 @@ document.addEventListener('DOMContentLoaded', () => {
             herbal_closed: parseInt(data.herbal_closed, 10),
             herbal_closed_by_measure: parseInt(data.herbal_closed_by_measure, 10),
             herbal_penaltied: parseInt(data.herbal_penaltied, 10),
+            herbal_total_end_of_month: parseInt(data.herbal_total_end_of_month, 10)
         };
         
-        const { data: insertedData, error } = await supabase
-            .from('health_reports_data')
-            .insert([payload]);
+        try {
+            const response = await fetch(FUNCTION_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                    'apikey': SUPABASE_ANON_KEY
+                },
+                body: JSON.stringify(payload),
+            });
 
-        if (error) {
+            const result = await response.json();
+
+            if (!response.ok) {
+                console.error('Error submitting form:', result.error);
+                alert('An error occurred. Please try again.');
+            } else {
+                console.log('Form submitted successfully:', result);
+                alert('Form submitted successfully!');
+                form.reset();
+            }
+        } catch (error) {
             console.error('Error submitting form:', error);
             alert('An error occurred. Please try again.');
-        } else {
-            console.log('Form submitted successfully:', insertedData);
-            alert('Form submitted successfully!');
-            form.reset();
         }
     });
 });
-
-
-
-// Supabase client creation function (to be included in your script.js)
-function createClient(supabaseUrl, supabaseKey) {
-    return {
-        from: (tableName) => ({
-            insert: (records) => {
-                const url = `${supabaseUrl}/rest/v1/${tableName}`;
-                const headers = {
-                    'Content-Type': 'application/json',
-                    'apikey': supabaseKey,
-                    'Authorization': `Bearer ${supabaseKey}`
-                };
-
-                return fetch(url, {
-                    method: 'POST',
-                    headers: headers,
-                    body: JSON.stringify(records)
-                }).then(response => response.json().then(data => ({
-                    data: response.ok ? data : null,
-                    error: response.ok ? null : data
-                })));
-            }
-        })
-    };
-}
