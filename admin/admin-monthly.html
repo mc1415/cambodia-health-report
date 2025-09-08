@@ -3,33 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ផ្ទាំងគ្រប់គ្រង - ក្រាហ្វ</title>
+    <title>របាយការណ៍ស្ថិតិឱសថស្ថាន និងអគារលក់ឱសថបុរាណ</title>
     <link rel="stylesheet" href="admin-style.css">
     <link href="https://fonts.googleapis.com/css2?family=Hanuman:wght@100..900&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-
     <div class="dashboard-container">
         <div class="header">
             <div class="header-logo">
                 <img src="MOH LOGO Official 2024.png" alt="MOH Logo">
             </div>
-            <h1>របាយការណ៍ជាក្រាហ្វ</h1>
+            <h1>របាយការណ៍ស្ថិតិឱសថស្ថាន និងអគារលក់ឱសថបុរាណ</h1>
             <nav class="main-nav">
                 <ul>
                     <li><a href="admin.html">របាយការណ៍ប្រចាំឆ្នាំតាមខេត្ត</a></li>
-                    <li><a href="admin-monthly.html">របាយការណ៍ប្រចាំខែ</a></li>
+                    <li class="active"><a href="admin-monthly.html">របាយការណ៍ប្រចាំខែ</a></li>
                     <li><a href="admin-national.html">របាយការណ៍ថ្នាក់ជាតិ</a></li>
-                    <li class="active"><a href="admin-graph.html">របាយការណ៍តាមក្រាហ្វ Graph</a></li>
+                    <li><a href="admin-graph.html">របាយការណ៍តាមក្រាហ្វ Graph</a></li>
                 </ul>
             </nav>
         </div>
-        <p>ទិន្នន័យស្ថិតិប្រចាំខេត្ត</p>
-
         <div class="form-group">
             <label for="province-selector">មន្ទីរសុខាភិបាលនៃរដ្ឋបាលខេត្ត:</label>
-            <select id="province-selector">
+            <select id="province-selector" name="province-selector">
                 <option value="" disabled selected>ជ្រើសរើសខេត្ត</option>
                 <option value="Banteay Meanchey">បន្ទាយមានជ័យ</option>
                 <option value="Battambang">បាត់ដំបង</option>
@@ -57,9 +53,6 @@
                 <option value="Pailin">ប៉ៃលិន</option>
                 <option value="Tbong Khmum">ត្បូងឃ្មុំ</option>
             </select>
-        </div>
-
-        <div class="form-group">
             <label for="month-selector">ប្រចាំខែ:</label>
             <select id="month-selector">
                 <option value="មករា">មករា</option>
@@ -80,17 +73,45 @@
                 <option value="" disabled selected>ជ្រើសរើសឆ្នាំ</option>
             </select>
         </div>
-
-        <div id="chart-container-monthly">
-            <canvas id="monthly-chart"></canvas>
-        </div>
-
-        <h2>របាយការណ៍ថ្នាក់ជាតិ</h2>
-        <div id="chart-container-yearly">
-            <canvas id="yearly-chart"></canvas>
-        </div>
+        <button id="export-btn" class="action-btn">ទាញយករបាយការណ៍ (Excel)</button>
+        <button id="print-btn" class="action-btn">Print</button>
+        <h2>របាយការណ៍ប្រចាំខែ</h2>
+        <table id="monthly-report-table">
+            <thead>
+                <tr>
+                    <th>ល.រ</th>
+                    <th>បរិយាយ</th>
+                    <th>ចំនួននៅសល់ដើមខែ</th>
+                    <th>បើកថ្មី</th>
+                    <th>បន្តសុពលភាព</th>
+                    <th>ប្តូរអ្នកបច្ចេកទេស​ ឬម្ចាស់ទុន ឬទីតាំង</th>
+                    <th>បិទសរុប</th>
+                    <th>បិទដោយវិធានការ</th>
+                    <th>ករណីពិន័យអន្តរការណ៍</th>
+                    <th>សរុបប្រចាំខែ</th>
+                    <th>សរុបប្រចាំឆ្នាំ</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <br/>
+        <h2>ចំនួនសរុបប្រចាំឆ្នាំតាមប្រភេទនៃសកម្មភាព</h2>
+        <table id="yearly-summary-table">
+            <thead>
+                <tr>
+                    <th>ល.រ</th>
+                    <th>បរិយាយ</th>
+                    <th>បើកថ្មី</th>
+                    <th>បន្តសុពលភាព</th>
+                    <th>ប្តូរអ្នកបច្ចេកទេស​ ឬម្ចាស់ទុន ឬទីតាំង</th>
+                    <th>បិទសរុប</th>
+                    <th>បិទដោយវិធានការ</th>
+                    <th>ករណីពិន័យអន្តរការណ៍</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
     </div>
-
-    <script src="admin-graph-script.js"></script>
+    <script src="admin-monthly-script.js"></script>
 </body>
 </html>

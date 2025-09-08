@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>របាយការណ៍ថ្នាក់ជាតិ</title>
+    <link rel="stylesheet" href="admin-style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Hanuman:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="header">
+            <div class="header-logo">
+                <img src="MOH LOGO Official 2024.png" alt="MOH Logo">
+            </div>
+            <h1>របាយការណ៍ថ្នាក់ជាតិ</h1>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="admin.html">របាយការណ៍ប្រចាំឆ្នាំតាមខេត្ត</a></li>
+                    <li><a href="admin-monthly.html">របាយការណ៍ប្រចាំខែ</a></li>
+                    <li class="active"><a href="admin-national.html">របាយការណ៍ថ្នាក់ជាតិ</a></li>
+                    <li><a href="admin-graph.html">របាយការណ៍តាមក្រាហ្វ Graph</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="form-group">
+            <label for="month-selector">ប្រចាំខែ:</label>
+            <select id="month-selector">
+                <option value="មករា">មករា</option>
+                <option value="កុម្ភៈ">កុម្ភៈ</option>
+                <option value="មីនា">មីនា</option>
+                <option value="មេសា">មេសា</option>
+                <option value="ឧសភា">ឧសភា</option>
+                <option value="មិថុនា">មិថុនា</option>
+                <option value="កក្កដា">កក្កដា</option>
+                <option value="សីហា">សីហា</option>
+                <option value="កញ្ញា">កញ្ញា</option>
+                <option value="តុលា">តុលា</option>
+                <option value="វិច្ឆិកា">វិច្ឆិកា</option>
+                <option value="ធ្នូ">ធ្នូ</option>
+            </select>
+            <label for="year-selector">ប្រចាំឆ្នាំ:</label>
+            <select id="year-selector">
+                <option value="" disabled selected>ជ្រើសរើសឆ្នាំ</option>
+            </select>
+        </div>
+
+        <button id="export-btn" class="action-btn">ទាញយករបាយការណ៍ (Excel)</button>
+        <button id="print-btn" class="action-btn">Print</button>
+
+        <table id="monthly-report-table">
+            <thead>
+                <tr>
+                    <th>ល.រ</th>
+                    <th>បរិយាយ</th>
+                    <th>ចំនួននៅសល់ដើមខែ</th>
+                    <th>បើកថ្មី</th>
+                    <th>បន្តសុពលភាព</th>
+                    <th>ប្តូរអ្នកបច្ចេកទេស​ ឬម្ចាស់ទុន ឬទីតាំង</th>
+                    <th>បិទសរុប</th>
+                    <th>បិទដោយវិធានការ</th>
+                    <th>ករណីពិន័យអន្តរការណ៍</th>
+                    <th>សរុបប្រចាំខែ</th>
+                    <th>សរុបប្រចាំឆ្នាំ</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <br/>
+
+        <h2>ចំនួនសរុបប្រចាំឆ្នាំតាមប្រភេទនៃសកម្មភាព</h2>
+        <table id="yearly-summary-table">
+            <thead>
+                <tr>
+                    <th>ល.រ</th>
+                    <th>បរិយាយ</th>
+                    <th>បើកថ្មី</th>
+                    <th>បន្តសុពលភាព</th>
+                    <th>ប្តូរអ្នកបច្ចេកទេស​ ឬម្ចាស់ទុន ឬទីតាំង</th>
+                    <th>បិទសរុប</th>
+                    <th>បិទដោយវិធានការ</th>
+                    <th>ករណីពិន័យអន្តរការណ៍</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <script src="admin-national-script.js"></script>
+</body>
+</html>
